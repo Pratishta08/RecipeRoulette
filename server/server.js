@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/database');
 require('dotenv').config();
+const recipeRoutes = require ('./routes/recipe');
+const addRecipeRoutes = require ('./routes/addRecipe');
+// const {filterByIngredient }= require('./controllers/recipeController')
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -16,12 +19,19 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Disable caching for all responses
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store');
+    next();
+});
+
 // Routes
 const authRoutes = require('./routes/auth');
-const recipeRoutes = require('./routes/recipe');
+const { addRecipe } = require('./controllers/addRecipeController');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/recipes', recipeRoutes);
+app.use('/api/addRecipe', addRecipeRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
