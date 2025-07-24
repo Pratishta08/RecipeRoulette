@@ -16,5 +16,5 @@
     imageUrl:{type:String}
     },{timestamps:true})
 
-const Recipe = mongoose.model('Recipe', recipeSchema);
-module.exports= Recipe;
+const recipe = mongoose.model('recipe', recipeSchema);
+module.exports= recipe;

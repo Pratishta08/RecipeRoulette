@@ -40,7 +40,7 @@ async function importFromDummyJSON() {
             totalTime: r.prepTimeMinutes && r.cookTimeMinutes ? `${r.prepTimeMinutes + r.cookTimeMinutes} min` : '',
             servings: r.servings ? String(r.servings) : '',
             ingredients: r.ingredients || [],
-            image: r.image || '',
+            imageUrl: r.imageUrl || '',
         }));
         const result = await Recipe.insertMany(mappedRecipes, { ordered: false });
         console.log(`Imported ${result.length} recipes from DummyJSON!`);

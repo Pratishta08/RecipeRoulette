@@ -21,7 +21,8 @@ exports.addRecipe = async (req, res) => {
             instructions,
             prepTimeMinutes,
             cookTimeMinutes,
-            ingredients
+            ingredients,
+            imageUrl
         });
         
         await recipe.save();
@@ -36,7 +37,8 @@ exports.addRecipe = async (req, res) => {
                 instructions: recipe.instructions,
                 prepTimeMinutes: recipe.prepTimeMinutes,
                 cookTimeMinutes: recipe.cookTimeMinutes,
-                ingredients: recipe.ingredients
+                ingredients: recipe.ingredients,
+                imageUrl: recipe.imageUrl
             },
             message: "Recipe added successfully"
         });
