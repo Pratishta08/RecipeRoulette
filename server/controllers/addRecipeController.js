@@ -1,4 +1,5 @@
-const addRecipeSchema = require('../models/AddRecipe');
+const AddRecipe = require('../models/AddRecipe');
+// const addRecipeSchema = require('../models/AddRecipe');
 
 exports.addRecipe = async (req, res) => {
     try {
@@ -9,36 +10,33 @@ exports.addRecipe = async (req, res) => {
             return;
         }
         
-        const existingRecipe = await User.findOne({ recipeName });
+        const existingRecipe = await AddRecipe.findOne({ recipeName });
         if (existingRecipe) {
             return res.status(400).json({ message: "Recipe already exists" });
         }
 
 
-        const recipe = new Recipe({
+        const newRecipe = new AddRecipe({
             recipeName,
             servings,
             instructions,
             prepTimeMinutes,
             cookTimeMinutes,
-            ingredients,
-            imageUrl
+            ingredients
         });
         
-        await recipe.save();
+        await newRecipe.save();
 
 
         res.status(201).json({
-            token,
             recipe: {
-                id: recipe._id,
-                recipeName: recipe.recipeName,
-                servings: recipe.servings,
-                instructions: recipe.instructions,
-                prepTimeMinutes: recipe.prepTimeMinutes,
-                cookTimeMinutes: recipe.cookTimeMinutes,
-                ingredients: recipe.ingredients,
-                imageUrl: recipe.imageUrl
+                id: newRecipe._id,
+                recipeName: newRecipe.recipeName,
+                servings: newRecipe.servings,
+                instructions: newRecipe.instructions,
+                prepTimeMinutes: newRecipe.prepTimeMinutes,
+                cookTimeMinutes: newRecipe.cookTimeMinutes,
+                ingredients: newRecipe.ingredients
             },
             message: "Recipe added successfully"
         });

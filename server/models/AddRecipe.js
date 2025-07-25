@@ -13,10 +13,10 @@ const addRecipeSchema = new mongoose.Schema({
         required: true,
         minlength: 6
     },
-    ingredients: {
+    ingredients: [{
         type: String,
         required: true
-    },
+    }],
     prepTimeMinutes:{
         type: Number,
     },

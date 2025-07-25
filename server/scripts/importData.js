@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 const csv = require('csv-parser'); 
-const Recipe = require('../models/Recipes'); 
+const Recipe = require('../models/recipes'); 
 const dotenv = require('dotenv');
 
 dotenv.config({path: path.resolve(__dirname, '../.env')})

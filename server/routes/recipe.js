@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const recipe = require('../models/Recipes');
+const recipe = require('../models/recipes');
 // Example route
 router.get('/', async(req,res)=>{
     try{
-        const recipes = await Recipe.find();
+        const recipes = await recipe.find();
         res.json(recipes);
     }catch(err){
         console.error(err.message);
