@@ -1,21 +1,21 @@
 const axios = require('axios');
+const Recipe = require('../models/Recipes');
 
-exports.filterByIngredient = async (req, res) => {
-  const { ingredient } = req.query;
-  if (!ingredient) {
-    return res.status(400).json({ message: 'Ingredient is required' });
+exports.getAllAndSearchRecipes = async (req, res) => {
+  const { query } = req.query;
+  let filter={};
+  try{
+  if (query) {
+    filter = {
+              $or: [
+                  { recipeName: { $regex: query, $options: 'i' } }, 
+                  { ingredients: { $regex: query, $options: 'i' } } 
+              ]
+            };
   }
-  try {
-    // Fetch all recipes from DummyJSON
-    const response = await axios.get('https://dummyjson.com/recipes');
-    // Filter recipes by ingredient (case-insensitive)
-    const filtered = (response.data.recipes || []).filter(recipe =>
-      recipe.ingredients.some(i =>
-        i.toLowerCase().includes(ingredient.toLowerCase())
-      )
-    );
-    res.json({ meals: filtered });
-  } catch (error) {
+  const recipes = await Recipe.find(filter);
+  res.json(recipes);
+}catch (error) {
     console.error('Error fetching recipes:', error);
     res.status(500).json({ message: 'Error fetching recipes' });
   }

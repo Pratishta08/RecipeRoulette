@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 
 // Routes
 const authRoutes = require('./routes/auth');
-const {addRecipe} = require('./routes/addRecipe');
+// const {addRecipe} = require('./routes/addRecipe');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/recipes', recipeRoutes);
