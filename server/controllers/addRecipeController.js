@@ -23,7 +23,7 @@ exports.addRecipe = async (req, res) => {
             prepTimeMinutes,
             cookTimeMinutes,
             ingredients,
-            imageUrl: imageUrl || ''
+            imageUrl: imageUrl
         });
         
         await newRecipe.save();

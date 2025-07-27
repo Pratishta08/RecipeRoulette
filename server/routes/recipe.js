@@ -4,7 +4,6 @@ const Recipe = require('../models/Recipes');
 const recipeController = require('../controllers/recipeController');
 
 router.get('/', recipeController.getAllAndSearchRecipes)
-// Example route
 router.get('/', async(req,res)=>{
     try{
         const recipes = await Recipe.find();
