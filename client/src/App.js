@@ -5,8 +5,9 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import AddRecipe from './components/AddRecipe';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import RecipeDetail from './components/RecipeDetail';
+import EditRecipe from './components/EditRecipe';
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -55,8 +56,13 @@ function App() {
     }, []);
 
     const PrivateRoute = ({ children }) => {
-        return user ? children : <navigate to="/login" replace />;
+        return user ? children : <Navigate to="/login" replace />;
     };
+
+    const handleRecipeUpdated = (updatedRecipe) => {
+        console.log('Recipe Updated: ', updatedRecipe);
+        setSearchQuery(''); // Clear search if needed, usually re-fetching list
+        setRefreshTrigger(prev => prev + 1);}
 
   return (
     <Router>
@@ -89,6 +95,12 @@ function App() {
 
             <Route path="/recipes/:id" element={
               <PrivateRoute><RecipeDetail /></PrivateRoute>} />
+
+              <Route path="/recipes/edit/:id" element={
+                            <PrivateRoute>
+                                <EditRecipe onRecipeUpdate={handleRecipeUpdated} />
+                            </PrivateRoute>
+                        } />
 
             <Route path='/' element={<Dashboard
               user={user}

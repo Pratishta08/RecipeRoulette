@@ -8,6 +8,12 @@ const RecipeDetails=()=>{
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    const handleEditClick = () => {
+        navigate(`/recipes/edit/${id}`);}
+    
+        // const handleDeleteClick = () => {
+        // navigate(`/recipes/delete/${id}`);}
+
     const placeholderImg = "https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg";
     useEffect(()=>{
         const fetchRecipeById = async () => {
@@ -50,6 +56,12 @@ const RecipeDetails=()=>{
             >
                 &times; {/* This is an 'X' symbol */}
             </button>
+            <button
+                onClick={handleEditClick}
+                className="absolute top-4 right-14 px-3 py-1 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600"
+            >
+                Edit
+            </button>
             <h2 className="text-3xl font-extrabold text-purple-800 mb-4">{recipe.recipeName}</h2>
             <img
                 src={recipe.imageUrl || placeholderImg}
@@ -78,6 +90,12 @@ const RecipeDetails=()=>{
                 {recipe.cookTimeMinutes > 0 && <p><strong>Cook Time:</strong> {recipe.cookTimeMinutes} minutes</p>}
                 {recipe.prepTimeMinutes > 0 && <p><strong>Prep Time:</strong> {recipe.prepTimeMinutes} minutes</p>}
             </div>
+            {/* <button
+                onClick={handleDeleteClick}
+                className="absolute top-4 right-14 px-3 py-1 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600"
+            >
+                Delete
+            </button> */}
         </div>
     );
 };

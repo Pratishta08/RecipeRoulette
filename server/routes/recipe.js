@@ -3,7 +3,9 @@ const router = express.Router();
 const Recipe = require('../models/Recipes');
 const recipeController = require('../controllers/recipeController');
 
-router.get('/', recipeController.getAllAndSearchRecipes)
+router.get('/', recipeController.getAllAndSearchRecipes);
+
+// router.get('/:id', recipeController.recipeDelete);
 router.get('/', async(req,res)=>{
     try{
         const recipes = await Recipe.find();
@@ -29,6 +31,8 @@ router.get('/:id', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
+router.put('/:id', recipeController.recipeUpdate);
 
 
 module.exports = router; 
