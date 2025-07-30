@@ -6,6 +6,7 @@ const RecipeDetails=()=>{
     const [recipe, setRecipe] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [deleteStatus, setDeleteStatus] = useState('')
     const navigate = useNavigate();
 
     const handleEditClick = () => {
@@ -19,6 +20,7 @@ const RecipeDetails=()=>{
         const fetchRecipeById = async () => {
             setLoading(true);
             setError('');
+            setDeleteStatus('');
             try {
                 const res = await fetch(`http://localhost:5000/api/recipes/${id}`);
                 if(!res.ok){
@@ -32,7 +34,7 @@ const RecipeDetails=()=>{
                 setError(err.message || 'Error fetching recipe');
             }finally{
                 setLoading(false);
-            }
+        }
     };
     if(id){
         fetchRecipeById();
@@ -42,6 +44,30 @@ const RecipeDetails=()=>{
             setLoading(false);
     }
 }, [id]);
+
+const handleDeleteClick = async () => {
+    if(window.confirm('Are you sure you want to delete this recipe?')){
+        setDeleteStatus('Deleting');
+        setError('');
+        try{
+            const res = await fetch(`http://localhost:5000/api/recipes/${id}`, {
+                method: 'DELETE',
+            });
+
+            const data = await res.json();
+            if(res.ok){
+                setDeleteStatus(data.message || 'Recipe deleted successfully');
+                navigate('/dashboard', {replace:true});
+            }else{
+                throw new Error(data.msg || 'Failed to delete recipe');
+            }
+        }catch(err){
+            console.log('Error deleting recipe', err);
+            setError(err.message || 'Error deleting recipe');
+            setDeleteStatus('');
+        }
+    }
+};
 
     if (loading){return<div>loading recipe details</div>;}
     if(error){return <div>{Error}</div>}
@@ -90,12 +116,13 @@ const RecipeDetails=()=>{
                 {recipe.cookTimeMinutes > 0 && <p><strong>Cook Time:</strong> {recipe.cookTimeMinutes} minutes</p>}
                 {recipe.prepTimeMinutes > 0 && <p><strong>Prep Time:</strong> {recipe.prepTimeMinutes} minutes</p>}
             </div>
-            {/* <button
+            <button
                 onClick={handleDeleteClick}
-                className="absolute top-4 right-14 px-3 py-1 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600"
+                className="absolute top-4 right-28 px-3 py-1 bg-red-500 text-white rounded-md text-sm hover:bg-red-600"
             >
                 Delete
-            </button> */}
+            </button>
+            {deleteStatus && <div className={`text-center mt-4 ${deleteStatus.includes('successfully') ? 'text-green-600' : 'text-yellow-600'}`}>{deleteStatus}</div>}
         </div>
     );
 };

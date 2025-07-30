@@ -69,7 +69,7 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-purple-300 to-pink-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Routes>
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path="/" element={<Login onLogin={handleLogin} />} />
           <Route path="/register" element={<Register onRegister={handleLogin} />} />
           <Route path="/dashboard" 
             element={
@@ -102,23 +102,18 @@ function App() {
                             </PrivateRoute>
                         } />
 
-            <Route path='/' element={<Dashboard
-              user={user}
-              onSwitchToLogin={handleLogout}
-              onSwitchToAddRecipe={() => {}}
-              onSearch={handleSearch}
-              currentSearchQuery={searchQuery}
-              refreshRecipes={refreshTrigger}/>
+            {/* <Route path='/' element={<login
+              onLogin={handleLogin}/>
             }
-            />
-            <Route path='*' element={<Dashboard
+            /> */}
+            {/* <Route path='*' element={<Dashboard
               user={user}
               onSwitchToLogin={handleLogout}
               onSwitchToAddRecipe={() => {}}
               onSearch={handleSearch}
               currentSearchQuery={searchQuery}
               refreshRecipes={refreshTrigger}/>}
-            />
+            /> */}
             
           (
             <Route path='*' element={<Login onLogin={handleLogin}/>}/>

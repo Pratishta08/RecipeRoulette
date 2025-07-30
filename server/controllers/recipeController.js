@@ -66,17 +66,20 @@ exports.recipeUpdate = async(req, res) => {
   }
 };
 
-// exports.deleteRecipe = async(req, res) => {
-//   try{
-//     const {id} = req.params;
-//     const recipeToDelete = await Recipe.findById(id);
-//     if(!recipeToDelete){
-//       return res.status(404).json({message: 'Recipe not found'});
-//     }
-//     await recipeToDelete.remove();
-//     res.status(200).json({message: 'Recipe deleted successfully!'});
-//     }catch(err){
-//       console.log('Recipe delete error', err);
-//     }
+exports.deleteRecipe = async(req, res) => {
+  try{
+    const {id} = req.params;
+    const deletedRecipe = await Recipe.findByIdAndDelete(id);
+    if(!deletedRecipe){
+      return res.status(404).json({message: 'Recipe not found'});
+    }
+    res.status(200).json({message: 'Recipe deleted successfully!'});
+    }catch(err){
+      console.log('Recipe delete error', err);
+      if (error.kind === 'ObjectId') {
+            return res.status(400).json({ message: 'Invalid recipe ID format.' });
+        }
+        res.status(500).json({ message: "Failed to delete recipe. Server error." });
+    }
 
-// }
+};

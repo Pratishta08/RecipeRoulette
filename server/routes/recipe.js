@@ -5,7 +5,7 @@ const recipeController = require('../controllers/recipeController');
 
 router.get('/', recipeController.getAllAndSearchRecipes);
 
-// router.get('/:id', recipeController.recipeDelete);
+router.delete('/:id', recipeController.deleteRecipe);
 router.get('/', async(req,res)=>{
     try{
         const recipes = await Recipe.find();
